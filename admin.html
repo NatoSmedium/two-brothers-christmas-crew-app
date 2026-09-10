@@ -152,7 +152,7 @@
     </div>
 
     <div class="controls">
-      <input type="text" id="searchBox" placeholder="Search by name..." oninput="render()">
+      <input type="text" id="searchBox" placeholder="Search by name, phone, or email..." oninput="render()">
       <select id="statusFilter" onchange="render()">
         <option value="">All statuses</option>
         <option>New</option>
@@ -211,7 +211,7 @@
   }
 
   function isQualified(a) {
-    return a.ValidLicense === true && a.Lift50 === true && a.RoofsLadders === true &&
+    return a.ValidLicense === true && a.Lift40 === true && a.RoofsLadders === true &&
            a.WorkDays === true && a.WorkHours === true && a.Transportation === true;
   }
 
@@ -221,7 +221,7 @@
     const qualifiedOnly = document.getElementById('qualifiedOnly').checked;
 
     let filtered = applicants.filter(a => {
-      if (search && !(a.Name || '').toLowerCase().includes(search)) return false;
+      if (search && !(`${a.Name || ''} ${a.Phone || ''} ${a.Email || ''}`.toLowerCase().includes(search))) return false;
       if (statusFilter && a.Status !== statusFilter) return false;
       if (qualifiedOnly && !isQualified(a)) return false;
       return true;
@@ -242,11 +242,12 @@
     list.innerHTML = filtered.map((a, i) => {
       const checks = [
         ['Valid license', a.ValidLicense],
-        ['Lift 50 lbs', a.Lift50],
+        ['Lift 40 lbs', a.Lift40],
         ['Roofs/ladders', a.RoofsLadders],
         ['5–6 days/wk', a.WorkDays],
         ['8–10 hr days', a.WorkHours],
-        ['Transportation', a.Transportation]
+        ['Transportation', a.Transportation],
+        ['Has truck', a.HasTruck]
       ];
       const chipHtml = checks.map(([label, val]) =>
         `<span class="chip ${val ? 'yes' : 'no'}">${val ? '✓' : '✕'} ${label}</span>`
@@ -260,14 +261,17 @@
           <div class="app-top" onclick="toggleDetails('${a.ID}')">
             <div>
               <div class="app-name">${escapeHtml(a.Name || 'Unnamed')}</div>
-              <div class="app-meta">License: ${escapeHtml(a.LicenseState || '?')} · Applied ${formatDate(a.Timestamp)}</div>
+              <div class="app-meta">${escapeHtml(a.Phone || '?')} · License: ${escapeHtml(a.LicenseState || '?')} · Applied ${formatDate(a.Timestamp)}</div>
             </div>
             <span class="status-badge status-${a.Status}">${a.Status}</span>
           </div>
           <div class="checks">${chipHtml}</div>
           <div class="details" id="details-${a.ID}">
+            <div class="detail-row"><b>Phone:</b> ${escapeHtml(a.Phone || '—')}</div>
+            <div class="detail-row"><b>Email:</b> ${escapeHtml(a.Email || '—')}</div>
             <div class="detail-row"><b>Address:</b> ${escapeHtml(a.Address || '—')}</div>
             <div class="detail-row"><b>License State:</b> ${escapeHtml(a.LicenseState || '—')}</div>
+            <div class="detail-row"><b>Interest:</b> ${escapeHtml(a.Interest || '—')}</div>
             <div class="detail-row"><b>Notes:</b> ${escapeHtml(a.Notes || '—')}</div>
             <div class="actions">
               <select onchange="updateStatus('${a.ID}', this.value)">${statusOptions}</select>
