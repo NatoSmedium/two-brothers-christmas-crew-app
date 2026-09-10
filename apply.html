@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Brothers Christmas — Crew Application</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg:#ffffff; --card:#ffffff; --card2:#f0f7f3;
+    --gold:#2f8f5b; --gold-dim:#1f6b43; --green:#1b5e3a;
+    --text:#173829; --dim:#5a7d6c; --line:rgba(27,94,58,0.16);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:'Inter',sans-serif; color:var(--text);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(47,143,91,0.06), transparent 45%),
+      var(--bg);
+    padding:28px 16px 60px;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+  .logo{ width:84px; height:auto; margin:0 auto 12px; display:block; border-radius:10px; }
+  header{ text-align:center; margin-bottom:22px; }
+  .eyebrow{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-dim); font-weight:700; margin-bottom:6px;}
+  h1{ font-family:'Fraunces',serif; font-size:26px; margin:0 0 6px; }
+  .sub{ color:var(--dim); font-size:13.5px; }
+
+  form{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 20px; box-shadow:0 4px 20px rgba(27,94,58,0.08); }
+  fieldset{ border:none; padding:0; margin:0 0 20px; }
+  legend{ font-family:'Fraunces',serif; font-size:15px; font-weight:600; color:var(--gold); margin-bottom:10px; padding:0; }
+
+  label.field{ display:block; margin-bottom:14px; }
+  label.field span{ display:block; font-size:12.5px; font-weight:600; color:var(--dim); margin-bottom:5px; }
+  input[type=text], select{
+    width:100%; padding:11px 12px; border-radius:9px; border:1px solid var(--line);
+    background:var(--card2); color:var(--text); font-size:15px; font-family:'Inter',sans-serif;
+  }
+  input[type=text]:focus, select:focus{ outline:none; border-color:var(--gold-dim); }
+
+  .row2{ display:flex; gap:10px; }
+  .row2 > label{ flex:1; }
+
+  .check{
+    display:flex; align-items:flex-start; gap:10px; padding:11px 12px; margin-bottom:9px;
+    background:var(--card2); border-radius:9px; border:1px solid var(--line); cursor:pointer;
+  }
+  .check input{ margin-top:2px; width:18px; height:18px; accent-color:var(--gold); flex-shrink:0; }
+  .check span{ font-size:14px; line-height:1.4; }
+
+  button{
+    width:100%; padding:14px; border:none; border-radius:10px; font-size:15px; font-weight:700;
+    background:linear-gradient(90deg, var(--gold-dim), var(--gold)); color:#ffffff; cursor:pointer;
+    font-family:'Inter',sans-serif; margin-top:4px;
+  }
+  button:disabled{ opacity:.6; cursor:default; }
+
+  .msg{ text-align:center; padding:40px 20px; }
+  .msg .big{ font-family:'Fraunces',serif; font-size:22px; color:var(--green); margin-bottom:8px; }
+  .msg p{ color:var(--dim); font-size:14px; }
+
+  .error{ color:#e0616b; font-size:13px; margin-top:10px; text-align:center; display:none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="logo" src="https://www.twobrotherschristmas.com/wp-content/uploads/2020/08/d418014b-3292-41a9-921a-62b2b7ec073b-262x201.png" alt="Two Brothers Christmas logo">
+    <div class="eyebrow">Two Brothers Christmas</div>
+    <h1>Join the Crew</h1>
+    <div class="sub">Residential &amp; commercial installs</div>
+  </header>
+
+  <form id="appForm">
+    <fieldset>
+      <legend>Your Info</legend>
+      <label class="field">
+        <span>Full Name</span>
+        <input type="text" id="name" required>
+      </label>
+      <label class="field">
+        <span>Home Address</span>
+        <input type="text" id="address" required>
+      </label>
+      <label class="field">
+        <span>Driver's License State</span>
+        <select id="licenseState" required>
+          <option value="">--</option>
+          <option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option>
+          <option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option>
+          <option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option>
+          <option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option>
+          <option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option>
+          <option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option>
+          <option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option>
+          <option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option>
+          <option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option>
+          <option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option>
+        </select>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend>A Few Questions</legend>
+      <label class="check">
+        <input type="checkbox" id="validLicense">
+        <span>Do you have a valid driver's license?</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="lift50">
+        <span>Can you lift 50 pounds?</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="roofsLadders">
+        <span>Are you comfortable working on roofs and ladders?</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="workDays">
+        <span>Are you able to work 5–6 days a week during the season?</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="workHours">
+        <span>Are you able to work 8–10 hour days?</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="transportation">
+        <span>Do you have reliable transportation to work every day?</span>
+      </label>
+    </fieldset>
+
+    <button type="submit" id="submitBtn">Submit Application</button>
+    <div class="error" id="errorMsg">Something went wrong submitting your application. Please try again.</div>
+  </form>
+
+  <div class="msg" id="successMsg" style="display:none;">
+    <div class="big">You're in!</div>
+    <p>Thanks for applying. We'll be in touch soon if it looks like a good fit.</p>
+  </div>
+</div>
+
+<script>
+  // ---- CONFIG ----
+  // Paste your Apps Script Web App URL here after deploying (see README.md)
+  const WEB_APP_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+  // ----------------
+
+  const form = document.getElementById('appForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorMsg.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const payload = {
+      action: 'create',
+      name: document.getElementById('name').value.trim(),
+      address: document.getElementById('address').value.trim(),
+      licenseState: document.getElementById('licenseState').value,
+      validLicense: document.getElementById('validLicense').checked,
+      lift50: document.getElementById('lift50').checked,
+      roofsLadders: document.getElementById('roofsLadders').checked,
+      workDays: document.getElementById('workDays').checked,
+      workHours: document.getElementById('workHours').checked,
+      transportation: document.getElementById('transportation').checked
+    };
+
+    try {
+      const res = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.ok) {
+        form.style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        throw new Error(data.error || 'Unknown error');
+      }
+    } catch (err) {
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Application';
+    }
+  });
+</script>
+</body>
+</html>
